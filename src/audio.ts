@@ -65,28 +65,22 @@ export function duration(file: string): number {
 /** Concatenate takes into one file with `gapSec` of silence between them. */
 export function merge(files: string[], out: string, gapSec: number): void {
   if (files.length === 0) throw new Error("Nothing to merge");
-  const res =
-    gapSec > 0
-      ? mergeWithGaps(files, out, gapSec)
-      : spawnSync("sox", [...files, "-r", SAMPLE_RATE, "-c", "1", out], { encoding: "utf8" });
-  if (res.status !== 0) throw new Error(`sox merge failed: ${res.stderr.trim()}`);
-}
-
-function mergeWithGaps(files: string[], out: string, gapSec: number) {
   const tmp = `${out}.parts`;
   fs.mkdirSync(tmp, { recursive: true });
   try {
-    // Pad each take (except the last) with trailing silence, then concatenate.
+    // sox only concatenates inputs with identical rate/channels, so convert every
+    // take first, padding all but the last with trailing silence.
     const parts = files.map((file, i) => {
-      if (i === files.length - 1) return file;
       const part = `${tmp}/${i}.wav`;
-      const res = spawnSync("sox", [file, "-r", SAMPLE_RATE, "-c", "1", part, "pad", "0", String(gapSec)], {
+      const pad = gapSec > 0 && i < files.length - 1 ? ["pad", "0", String(gapSec)] : [];
+      const res = spawnSync("sox", [file, "-r", SAMPLE_RATE, "-c", "1", "-b", "16", part, ...pad], {
         encoding: "utf8",
       });
-      if (res.status !== 0) throw new Error(`sox pad failed: ${res.stderr.trim()}`);
+      if (res.status !== 0) throw new Error(`sox convert failed: ${res.stderr.trim()}`);
       return part;
     });
-    return spawnSync("sox", [...parts, "-r", SAMPLE_RATE, "-c", "1", out], { encoding: "utf8" });
+    const res = spawnSync("sox", [...parts, out], { encoding: "utf8" });
+    if (res.status !== 0) throw new Error(`sox merge failed: ${res.stderr.trim()}`);
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
