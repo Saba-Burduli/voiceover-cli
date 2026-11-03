@@ -1,6 +1,6 @@
 {
   "name": "voiceover-plugin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Claude Code plugin: narrate the demo videos Claude builds in your own voice",
   "type": "module",
   "bin": {
@@ -10,17 +10,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && esbuild src/cli.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/voiceover.mjs --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\"",
+    "build": "rm -rf dist && esbuild src/cli.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/voiceover.mjs",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": ">=20"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.0",
-    "commander": "^12.1.0",
-    "picocolors": "^1.1.1",
-    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

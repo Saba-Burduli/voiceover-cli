@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import pc from "picocolors";
+import pc from "./colors.js";
 import { duration, merge, missingTools, play, startRecording } from "./audio.js";
 import { readManifest, syncManifest, writeManifest, type Manifest, type ManifestLine } from "./manifest.js";
 import { readScript, scriptPath, waitForScript, type Line, type Script } from "./script.js";

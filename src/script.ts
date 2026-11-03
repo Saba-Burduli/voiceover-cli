@@ -1,21 +1,29 @@
 import fs from "node:fs";
 import path from "node:path";
-import { z } from "zod";
 
-export const LineSchema = z.object({
-  id: z.string().min(1).optional(),
-  text: z.string().min(1),
-  note: z.string().optional(),
-});
-
-export const ScriptSchema = z.object({
-  title: z.string().default("Voiceover"),
-  lines: z.array(LineSchema).min(1),
-});
-
-export type ScriptInput = z.input<typeof ScriptSchema>;
+export type LineInput = { id?: string; text: string; note?: string };
+export type ScriptInput = { title?: string; lines: LineInput[] };
 export type Line = { id: string; text: string; note?: string };
 export type Script = { title: string; lines: Line[] };
+
+const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+const optionalString = (v: unknown, name: string): string | undefined => {
+  if (v === undefined || v === null || v === "") return undefined;
+  if (typeof v !== "string") throw new Error(`${name} must be a string`);
+  return v;
+};
+
+/** Check the shape of a script sent by the agent or read from disk. */
+export function parseScriptInput(input: unknown): ScriptInput {
+  if (!isObject(input)) throw new Error("script must be an object");
+  if (!Array.isArray(input.lines) || input.lines.length === 0) throw new Error("lines must be a non-empty array");
+  const lines = input.lines.map((line, i) => {
+    if (!isObject(line)) throw new Error(`lines[${i}] must be an object`);
+    if (typeof line.text !== "string" || !line.text.trim()) throw new Error(`lines[${i}].text must be a non-empty string`);
+    return { id: optionalString(line.id, `lines[${i}].id`), text: line.text, note: optionalString(line.note, `lines[${i}].note`) };
+  });
+  return { title: optionalString(input.title, "title"), lines };
+}
 
 export const SCRIPT_FILE = "script.json";
 
@@ -31,7 +39,7 @@ export function slugify(text: string): string {
 
 /** Validate input and give every line a stable, unique id like "03-open-dashboard". */
 export function normalizeScript(input: unknown): Script {
-  const parsed = ScriptSchema.parse(input);
+  const parsed = parseScriptInput(input);
   const seen = new Set<string>();
   const lines = parsed.lines.map((line, i) => {
     let id = line.id ? slugify(line.id) : `${String(i + 1).padStart(2, "0")}-${slugify(line.text)}`;
@@ -39,7 +47,7 @@ export function normalizeScript(input: unknown): Script {
     seen.add(id);
     return { id, text: line.text.trim(), ...(line.note ? { note: line.note } : {}) };
   });
-  return { title: parsed.title, lines };
+  return { title: parsed.title ?? "Voiceover", lines };
 }
 
 export function scriptPath(dir: string): string {

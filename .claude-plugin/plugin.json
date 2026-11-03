@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "voiceover",
   "displayName": "Voiceover",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Put your own voice in the demo videos Claude builds. Claude writes the script, opens a recorder that shows you each line to read, and times every scene to your takes.",
   "author": { "name": "Saba Burduli", "url": "https://github.com/Saba-Burduli" },
   "homepage": "https://github.com/Saba-Burduli/voiceover-plugin#readme",
