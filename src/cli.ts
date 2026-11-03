@@ -16,7 +16,7 @@ const DEFAULT_DIR = ".voiceover";
 const program = new Command()
   .name("voiceover")
   .description("Record demo voiceovers line by line. Your coding agent sends the lines over MCP.")
-  .version("0.1.0");
+  .version("0.2.0");
 
 program
   .command("record", { isDefault: true })
