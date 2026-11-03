@@ -52,6 +52,9 @@ function rel(dir: string, file: string) {
 /** Record one take. Returns the take path once the user stops recording. */
 async function recordTake(file: string): Promise<string> {
   const rec = startRecording(file);
+  process.stdout.write(pc.dim("  opening mic…"));
+  await rec.ready;
+  process.stdout.write("\r\x1b[2K");
   process.stdout.write(`  ${pc.red("●")} ${pc.red("REC")}  ${pc.dim("speak now — press")} ${pc.bold("Enter")} ${pc.dim("to stop")}`);
   try {
     await readKey(["enter"]);

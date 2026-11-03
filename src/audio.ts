@@ -20,9 +20,23 @@ function waitForExit(child: ChildProcess): Promise<number | null> {
 }
 
 export type Recording = {
+  /** Resolves once audio is actually being captured (the device takes a moment to open). */
+  ready: Promise<void>;
   /** Stop recording and wait until the file is finalized. */
   stop(): Promise<void>;
 };
+
+function waitForAudio(file: string, child: ChildProcess, timeoutMs = 2000): Promise<void> {
+  const started = Date.now();
+  return new Promise((resolve) => {
+    const tick = () => {
+      const size = fs.existsSync(file) ? fs.statSync(file).size : 0;
+      if (size > 44 || child.exitCode !== null || Date.now() - started > timeoutMs) return resolve();
+      setTimeout(tick, 20);
+    };
+    tick();
+  });
+}
 
 export function startRecording(file: string): Recording {
   const child = spawn("rec", ["-q", "-c", "1", "-r", SAMPLE_RATE, "-b", "16", file], {
@@ -32,6 +46,7 @@ export function startRecording(file: string): Recording {
   child.stderr?.on("data", (chunk) => (stderr += chunk));
   const exited = waitForExit(child);
   return {
+    ready: waitForAudio(file, child),
     async stop() {
       if (child.exitCode === null) child.kill("SIGINT");
       await exited;
