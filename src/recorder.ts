@@ -16,6 +16,12 @@ const RELOAD = "__reload";
 
 type Key = "enter" | string;
 
+/** Same physical keys on non-Latin layouts (Georgian QWERTY, Russian), so r/s/q/p/k work without switching. */
+const LAYOUT_KEYS: Record<string, string> = {
+  რ: "r", ღ: "r", ს: "s", შ: "s", ქ: "q", პ: "p", კ: "k",
+  к: "r", ы: "s", й: "q", з: "p", л: "k",
+};
+
 /**
  * Keyboard input in raw mode. Keys pressed while nothing is waiting (e.g. while
  * the mic is opening) are dropped, so a stray Enter can't stop a take early.
@@ -30,7 +36,8 @@ class Keys {
     process.stdin.on("data", (chunk: Buffer) => {
       const s = chunk.toString();
       if (s === "\u0003") return this.quit();
-      this.deliver(s === "\r" || s === "\n" ? "enter" : s.toLowerCase());
+      const key = s.toLowerCase();
+      this.deliver(s === "\r" || s === "\n" ? "enter" : (LAYOUT_KEYS[key] ?? key));
     });
   }
 

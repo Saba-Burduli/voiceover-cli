@@ -24864,6 +24864,20 @@ var PID_FILE = "recorder.pid";
 var QuitError = class extends Error {
 };
 var RELOAD = "__reload";
+var LAYOUT_KEYS = {
+  \u10E0: "r",
+  \u10E6: "r",
+  \u10E1: "s",
+  \u10E8: "s",
+  \u10E5: "q",
+  \u10DE: "p",
+  \u10D9: "k",
+  \u043A: "r",
+  \u044B: "s",
+  \u0439: "q",
+  \u0437: "p",
+  \u043B: "k"
+};
 var Keys = class {
   waiter = null;
   quitRequested = false;
@@ -24873,7 +24887,8 @@ var Keys = class {
     process.stdin.on("data", (chunk) => {
       const s = chunk.toString();
       if (s === "") return this.quit();
-      this.deliver(s === "\r" || s === "\n" ? "enter" : s.toLowerCase());
+      const key = s.toLowerCase();
+      this.deliver(s === "\r" || s === "\n" ? "enter" : LAYOUT_KEYS[key] ?? key);
     });
   }
   stop() {
