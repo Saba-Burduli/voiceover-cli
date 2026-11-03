@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "voiceover-studio",
   "displayName": "Voiceover Studio",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Put your own voice in the demo videos Claude builds. Claude writes the script, opens a recorder that shows you each line to read, and times every scene to your takes.",
   "author": {
     "name": "Saba Burduli",
@@ -10,6 +10,7 @@
   },
   "homepage": "https://github.com/Saba-Burduli/voiceover-plugin#readme",
   "repository": "https://github.com/Saba-Burduli/voiceover-plugin",
+  "privacyPolicyUrl": "https://github.com/Saba-Burduli/voiceover-plugin/blob/main/PRIVACY.md",
   "license": "MIT",
   "keywords": [
     "voiceover",

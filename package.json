@@ -1,6 +1,6 @@
 {
   "name": "voiceover-plugin",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Claude Code plugin: narrate the demo videos Claude builds in your own voice",
   "type": "module",
   "bin": {

@@ -94,6 +94,8 @@ If macOS asks whether Terminal can use the microphone, click **Allow**.
 - **Files:** reads and writes only the `.voiceover/` folder in your project. Takes play back with `afplay`.
 - **Network:** none. The plugin sends no audio, text or usage data anywhere and downloads nothing.
 
+See the full [Privacy policy](PRIVACY.md).
+
 ## Advanced: CLI
 
 The plugin runs `dist/voiceover.mjs`, which also works as a standalone CLI:
