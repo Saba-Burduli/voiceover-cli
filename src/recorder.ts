@@ -209,6 +209,7 @@ function writePid(dir: string): () => void {
   const file = path.join(dir, PID_FILE);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(file, String(process.pid));
+  fs.rmSync(path.join(dir, "recorder.launching"), { force: true });
   return () => {
     try {
       if (fs.readFileSync(file, "utf8") === String(process.pid)) fs.rmSync(file);
