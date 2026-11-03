@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "voiceover": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/voiceover.mjs", "mcp"]
+    }
+  }
+}
