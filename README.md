@@ -1,28 +1,38 @@
 # Voiceover
 
-Narrate the demo videos Claude builds with your own voice.
+**Put your own voice in the demo videos Claude builds.**
 
-You ask Claude for a demo and say you'll voice it over. Claude plans the scenes and writes a line for each one, then opens a recorder window on your screen. You read each line, hear it back, and keep it or redo it. When you're done, Claude builds the video with every scene timed to your recording.
+A demo narrated by the person who made the product feels different. Viewers hear you, not a stock voice, and the product sounds like yours. Voiceover is a Claude Code plugin that makes that take one sentence:
+
+> Make a demo video of this project. I want to voice it over.
+
+Claude plans the scenes and writes a short line for each one, then opens a recorder on your screen. The recorder shows the exact words to say, with a cue for what will be on screen at that moment. You read each line, hear it back right away, and keep it or redo it. Say **done**, and Claude builds the video with every scene timed to your voice.
+
+You never write a script, run a command, or manage audio files.
+
+## Requirements
+
+- **macOS**. The recorder opens in a Terminal window. On Linux, Claude gives you a command to run instead.
+- **Claude Code**: the terminal, an IDE extension, or the desktop app's Code tab.
+- **Node.js 20 or newer**, which runs the plugin.
+- **SoX**, which records and plays audio. If it's missing, Claude offers to install it:
+  ```bash
+  brew install sox
+  ```
 
 ## 1. Install
 
-You need SoX for recording (if it's missing, Claude will offer to install it):
-
-```bash
-brew install sox
-```
-
-Then, inside Claude Code:
+Inside Claude Code:
 
 ```
-/plugin install voiceover --marketplace Saba-Burduli/voiceover-cli
+/plugin install voiceover --marketplace Saba-Burduli/voiceover-plugin
 ```
 
 On Claude Code versions older than 2.1.275, install it in two steps:
 
 ```
-/plugin marketplace add Saba-Burduli/voiceover-cli
-/plugin install voiceover@voiceover
+/plugin marketplace add Saba-Burduli/voiceover-plugin
+/plugin install voiceover@voiceover-plugin
 ```
 
 ## 2. Ask Claude
@@ -75,6 +85,14 @@ If macOS asks whether Terminal can use the microphone, click **Allow**.
   - `manifest.json`: progress and durations
   - `takes/`: every take, including redos
 - Progress is saved after every take. If Claude rewords a line, only that line needs re-recording.
+- The recorder accepts its keys on English, Georgian and Russian keyboard layouts.
+
+## What it does on your machine
+
+- **Microphone:** records only between your two Enter presses, using SoX's `rec`. macOS asks once whether Terminal can use the microphone.
+- **Terminal:** `start_voiceover` opens one Terminal window with `osascript` to run the recorder. If a recorder is already open, it reuses that window.
+- **Files:** reads and writes only the `.voiceover/` folder in your project. Takes play back with `afplay`.
+- **Network:** none. The plugin sends no audio, text or usage data anywhere and downloads nothing.
 
 ## Advanced: CLI
 
