@@ -20,7 +20,7 @@ export async function runMcpServer(opts: { dir: string }): Promise<void> {
     : path.resolve(opts.dir);
   const resolveDir = (projectDir?: string) => (projectDir ? path.join(path.resolve(projectDir), ".voiceover") : fallback);
 
-  const server = new McpServer({ name: "voiceover", version: "0.2.0" });
+  const server = new McpServer({ name: "voiceover", version: "0.3.0" });
 
   server.registerTool(
     "start_voiceover",

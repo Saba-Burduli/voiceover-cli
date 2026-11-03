@@ -25168,7 +25168,7 @@ var projectDirArg = external_exports.string().optional().describe("Absolute path
 async function runMcpServer(opts) {
   const fallback = process.env.CLAUDE_PROJECT_DIR ? path5.join(process.env.CLAUDE_PROJECT_DIR, opts.dir) : path5.resolve(opts.dir);
   const resolveDir = (projectDir) => projectDir ? path5.join(path5.resolve(projectDir), ".voiceover") : fallback;
-  const server = new McpServer({ name: "voiceover", version: "0.2.0" });
+  const server = new McpServer({ name: "voiceover", version: "0.3.0" });
   server.registerTool(
     "start_voiceover",
     {
@@ -25259,7 +25259,7 @@ async function runMcpServer(opts) {
 
 // src/cli.ts
 var DEFAULT_DIR = ".voiceover";
-var program2 = new Command().name("voiceover").description("Record demo voiceovers line by line. Your coding agent sends the lines over MCP.").version("0.2.0");
+var program2 = new Command().name("voiceover").description("Record demo voiceovers line by line. Your coding agent sends the lines over MCP.").version("0.3.0");
 program2.command("record", { isDefault: true }).description("Record the lines your session sent, one take at a time").option("-d, --dir <dir>", "voiceover folder", DEFAULT_DIR).option("-g, --gap <seconds>", "silence between lines in the merged file", "0.4").option("--redo <lineId>", "re-record a line that is already done").action(async (opts) => {
   const gap = Number.parseFloat(opts.gap);
   if (!Number.isFinite(gap) || gap < 0) throw new Error("--gap must be a number of seconds \u2265 0");

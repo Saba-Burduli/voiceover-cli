@@ -1,7 +1,7 @@
 {
-  "name": "voiceover-cli",
-  "version": "0.2.0",
-  "description": "Record demo voiceovers line by line, with lines sent from your AI coding session over MCP",
+  "name": "voiceover-plugin",
+  "version": "0.3.0",
+  "description": "Claude Code plugin: narrate the demo videos Claude builds in your own voice",
   "type": "module",
   "bin": {
     "voiceover": "dist/voiceover.mjs"
