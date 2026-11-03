@@ -11,7 +11,7 @@ import { normalizeScript, readScript, writeScript } from "./script.js";
  * full SDK, and keeping it small keeps the plugin readable and dependency-free.
  */
 
-export const VERSION = "0.3.1";
+export const VERSION = "0.3.2";
 
 type ToolResult = { content: { type: "text"; text: string }[]; isError?: boolean };
 const text = (value: string, isError = false): ToolResult => ({

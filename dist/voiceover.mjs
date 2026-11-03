@@ -533,7 +533,7 @@ function openRecorder(dir) {
 }
 
 // src/mcp.ts
-var VERSION = "0.3.1";
+var VERSION = "0.3.2";
 var text = (value, isError = false) => ({
   content: [{ type: "text", text: value }],
   ...isError ? { isError } : {}

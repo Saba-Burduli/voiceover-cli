@@ -1,16 +1,28 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
   "name": "voiceover-plugin",
-  "owner": { "name": "Saba Burduli", "url": "https://github.com/Saba-Burduli" },
+  "owner": {
+    "name": "Saba Burduli",
+    "url": "https://github.com/Saba-Burduli"
+  },
   "description": "Narrate the demo videos Claude builds in your own voice",
   "plugins": [
     {
-      "name": "voiceover",
-      "displayName": "Voiceover",
+      "name": "voiceover-studio",
+      "displayName": "Voiceover Studio",
       "source": "./",
       "description": "Put your own voice in the demo videos Claude builds. Claude writes the lines, you read them in a recorder, and every scene is timed to your takes.",
       "category": "Design",
-      "keywords": ["voiceover", "narration", "demo", "demo-video", "screencast"]
+      "keywords": [
+        "voiceover",
+        "narration",
+        "demo",
+        "demo-video",
+        "screencast"
+      ]
     }
-  ]
+  ],
+  "renames": {
+    "voiceover": "voiceover-studio"
+  }
 }

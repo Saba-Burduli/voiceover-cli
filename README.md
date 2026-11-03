@@ -1,8 +1,8 @@
-# Voiceover
+# Voiceover Studio
 
 **Put your own voice in the demo videos Claude builds.**
 
-A demo narrated by the person who made the product feels different. Viewers hear you, not a stock voice, and the product sounds like yours. Voiceover is a Claude Code plugin that makes that take one sentence:
+A demo narrated by the person who made the product feels different. Viewers hear you, not a stock voice, and the product sounds like yours. Voiceover Studio is a Claude Code plugin that makes that take one sentence:
 
 > Make a demo video of this project. I want to voice it over.
 
@@ -25,21 +25,21 @@ You never write a script, run a command, or manage audio files.
 Inside Claude Code:
 
 ```
-/plugin install voiceover --marketplace Saba-Burduli/voiceover-plugin
+/plugin install voiceover-studio --marketplace Saba-Burduli/voiceover-plugin
 ```
 
 On Claude Code versions older than 2.1.275, install it in two steps:
 
 ```
 /plugin marketplace add Saba-Burduli/voiceover-plugin
-/plugin install voiceover@voiceover-plugin
+/plugin install voiceover-studio@voiceover-plugin
 ```
 
 ## 2. Ask Claude
 
 > Make a demo video of the onboarding flow. I want to voice it over.
 
-You can also use `/voiceover <what the demo should show>`.
+You can also use `/voiceover-studio:voiceover <what the demo should show>`.
 
 ## 3. Talk
 
